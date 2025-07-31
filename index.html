@@ -10,12 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLp/iBq06eIuT4+6o/lB8u2L+wL5n82+Vb8U4/a7tD2/5E2c5nI/u+Jv48O9/j4oR2P6V3C5C5Z8g9y9Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        /*
+         * Web sitesinin tüm stil kuralları burada tanımlanır.
+         */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a202c; /* Koyu arka plan */
+            background-color: #1a202c;
+            color: #e2e8f0;
         }
-        /* Fade in animasyonu */
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -23,28 +28,32 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Aktif linkin rengini değiştirme */
         .nav-link.active {
-            color: #6366f1; /* Mor renk */
+            color: #818cf8; /* Koyu mor tonu */
             font-weight: 600;
+        }
+        .button-hover-effect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
-<body class="text-white min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
     <!-- Navigasyon Çubuğu -->
-    <header class="bg-gray-800 shadow-lg sticky top-0 z-50">
+    <header class="bg-gray-900 shadow-xl sticky top-0 z-50">
         <div class="container mx-auto p-4 flex justify-between items-center">
             <!-- Logo/Başlık -->
             <a href="#" onclick="showSection('home-section')" class="text-2xl font-bold text-white tracking-wide">
-                Zwen'in <span class="text-indigo-500">Kod Okulu</span>
+                Zwen'in <span class="text-indigo-400">Kod Okulu</span>
             </a>
             
             <!-- Navigasyon Menüsü -->
             <nav class="flex items-center space-x-6">
-                <a href="#" onclick="showSection('home-section')" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 active">Ana Sayfa</a>
-                <a href="#" onclick="showSection('python-section')" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Python</a>
-                <a href="#" onclick="showSection('js-section')" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">JavaScript</a>
+                <a href="#" onclick="showSection('home-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 active">Ana Sayfa</a>
+                <a href="#" onclick="showSection('python-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300">Python</a>
+                <a href="#" onclick="showSection('js-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300">JavaScript</a>
+                <a href="#" onclick="showSection('about-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300">Hakkımda</a>
             </nav>
         </div>
     </header>
@@ -54,19 +63,19 @@
 
         <!-- Ana Sayfa Bölümü -->
         <section id="home-section" class="fade-in">
-            <div class="text-center py-20 px-4">
-                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight">
-                    Merhaba, <span class="text-indigo-500">kod</span> dünyasına hoş geldin!
+            <div class="text-center py-20 px-4 bg-gray-800 rounded-3xl shadow-2xl">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight text-white">
+                    Merhaba, <span class="text-indigo-400">kod</span> dünyasına hoş geldin!
                 </h1>
-                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
                     Programlama öğrenmek artık çok daha kolay. İster Python ile başla, ister JavaScript'in büyülü dünyasına dal.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                    <button onclick="showSection('python-section')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
-                        Python Öğren
+                    <button onclick="showSection('python-section')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg">
+                        <i class="fab fa-python mr-3"></i> Python Öğren
                     </button>
-                    <button onclick="showSection('js-section')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
-                        JavaScript Öğren
+                    <button onclick="showSection('js-section')" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg">
+                        <i class="fab fa-js mr-3"></i> JavaScript Öğren
                     </button>
                 </div>
             </div>
@@ -74,19 +83,21 @@
 
         <!-- Python Öğrenme Bölümü -->
         <section id="python-section" class="hidden fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12">Python Öğrenmeye Başla</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 flex items-center justify-center">
+                <i class="fab fa-python text-indigo-400 mr-4 text-5xl"></i> Python Öğrenmeye Başla
+            </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Kaynak Kartı 1 -->
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3">Neden Python?</h3>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fas fa-question-circle mr-3"></i> Neden Python?</h3>
                     <p class="text-gray-300">
                         Python, anlaşılır sözdizimi sayesinde yeni başlayanlar için harika bir dildir. Veri bilimi, web geliştirme ve yapay zeka gibi birçok alanda kullanılır.
                         <span class="block mt-2 text-sm text-gray-500">- Zwen</span>
                     </p>
                 </div>
                 <!-- Kaynak Kartı 2 -->
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3">Başlangıç Kaynakları</h3>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fas fa-book-open mr-3"></i> Başlangıç Kaynakları</h3>
                     <ul class="list-disc list-inside text-gray-300 space-y-2">
                         <li><a href="https://www.python.org/doc/" target="_blank" class="hover:text-white transition-colors">Python Resmi Dokümantasyon</a></li>
                         <li><a href="https://www.freecodecamp.org/learn/python-for-everybody/" target="_blank" class="hover:text-white transition-colors">FreeCodeCamp Python Kursu</a></li>
@@ -94,8 +105,8 @@
                     </ul>
                 </div>
                 <!-- Kaynak Kartı 3 -->
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3">Proje Fikirleri</h3>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fas fa-tools mr-3"></i> Proje Fikirleri</h3>
                     <p class="text-gray-300 mb-2">Öğrendiklerini pekiştirmek için bu projelerle pratik yapabilirsin:</p>
                     <ul class="list-disc list-inside text-gray-300 space-y-2">
                         <li>Basit bir hesap makinesi uygulaması</li>
@@ -111,19 +122,21 @@
 
         <!-- JavaScript Öğrenme Bölümü -->
         <section id="js-section" class="hidden fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12">JavaScript Öğrenmeye Başla</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 flex items-center justify-center">
+                <i class="fab fa-js-square text-yellow-400 mr-4 text-5xl"></i> JavaScript Öğrenmeye Başla
+            </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Kaynak Kartı 1 -->
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3">Neden JavaScript?</h3>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3 flex items-center"><i class="fas fa-globe mr-3"></i> Neden JavaScript?</h3>
                     <p class="text-gray-300">
                         JavaScript, web sitelerini interaktif hale getiren, tarayıcıların dilidir. Frontend'den backend'e kadar her yerde karşınıza çıkar.
                         <span class="block mt-2 text-sm text-gray-500">- Zwen</span>
                     </p>
                 </div>
                 <!-- Kaynak Kartı 2 -->
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3">Başlangıç Kaynakları</h3>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3 flex items-center"><i class="fas fa-bookmark mr-3"></i> Başlangıç Kaynakları</h3>
                     <ul class="list-disc list-inside text-gray-300 space-y-2">
                         <li><a href="https://developer.mozilla.org/tr/docs/Web/JavaScript" target="_blank" class="hover:text-white transition-colors">MDN Web Docs</a></li>
                         <li><a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/" target="_blank" class="hover:text-white transition-colors">FreeCodeCamp JS Kursu</a></li>
@@ -131,8 +144,8 @@
                     </ul>
                 </div>
                 <!-- Kaynak Kartı 3 -->
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
-                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3">Proje Fikirleri</h3>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3 flex items-center"><i class="fas fa-laptop-code mr-3"></i> Proje Fikirleri</h3>
                     <p class="text-gray-300 mb-2">Kodlamaya başlamak için bu fikirleri deneyebilirsin:</p>
                     <ul class="list-disc list-inside text-gray-300 space-y-2">
                         <li>Küçük bir dijital saat uygulaması</li>
@@ -146,39 +159,66 @@
             </p>
         </section>
 
+        <!-- Hakkımda Bölümü -->
+        <section id="about-section" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto bg-gray-800 rounded-3xl p-10 shadow-2xl">
+                <h2 class="text-4xl font-bold text-center mb-6">
+                    <i class="fas fa-user-circle text-indigo-400 mr-3"></i> Zwen Kimdir?
+                </h2>
+                <div class="text-lg text-gray-300 space-y-6 text-center">
+                    <p>
+                        Merhaba! Ben Zwen. Bu web sitesini, kodlama öğrenmek isteyen herkese ilham vermek ve rehberlik etmek amacıyla kurdum. Programlama yolculuğumda edindiğim deneyimleri, en iyi kaynakları ve pratik proje fikirlerini burada sizlerle paylaşıyorum.
+                    </p>
+                    <p>
+                        Amacım, kodlamanın zor bir şey olmadığını, aksine yaratıcılığınızı ortaya çıkarabileceğiniz eğlenceli bir dünya olduğunu göstermek. Unutmayın, önemli olan nereden başladığınız değil, her gün yeni bir şeyler öğrenmeye devam etmenizdir.
+                    </p>
+                    <p>
+                        "Zwen'in Kod Okulu"nda öğrendiğiniz her şeyin, kendi projelerinizi hayata geçirebilmeniz için sağlam bir temel oluşturmasını diliyorum. Başarılar!
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-center text-gray-400 p-4 mt-auto">
+    <footer class="bg-gray-900 text-center text-gray-500 p-4 mt-auto">
+        <div class="flex justify-center space-x-6 mb-2">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github-square fa-2x"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter-square fa-2x"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin fa-2x"></i></a>
+        </div>
         <p>Zwen'den Sevgilerle</p>
         <p class="text-sm mt-1">&copy; 2024. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- JavaScript ile sayfa geçişleri -->
     <script>
-        // Sayfa bölümlerini seçme
+        /*
+         * Web sitesinin tüm etkileşimli JavaScript kodları burada tanımlanır.
+         * Sayfa geçişlerini ve aktif linkleri yönetir.
+         */
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
+        const allSections = ['home-section', 'python-section', 'js-section', 'about-section'];
 
-        // Belirli bir bölümü gösterip diğerlerini gizleyen fonksiyon
         function showSection(id) {
-            // Tüm bölümleri gizle
+            // Tüm bölümleri gizle ve animasyon sınıfını kaldır
             sections.forEach(section => {
                 section.classList.add('hidden');
                 section.classList.remove('fade-in');
             });
-            // İlgili bölümü göster
+            // İlgili bölümü göster ve animasyonu ekle
             const targetSection = document.getElementById(id);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
                 targetSection.classList.add('fade-in');
             }
             
-            // Aktif navigasyon linkini işaretle
+            // Tüm navigasyon linklerinin "active" sınıfını kaldır
             navLinks.forEach(link => {
                 link.classList.remove('active');
             });
-            // Tıklanan linki bulup aktif yap
+            // Tıklanan linke "active" sınıfını ekle
             const activeLink = document.querySelector(`a[onclick="showSection('${id}')"]`);
             if (activeLink) {
                 activeLink.classList.add('active');
