@@ -175,7 +175,7 @@
             <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin fa-2x"></i></a>
         </div>
         <p>Zwen'den Sevgilerle</p>
-        <p class="text-sm mt-1">© 2024. Tüm hakları saklıdır.</p>
+        <p class="text-sm mt-1">© <span id="current-year">2025</span>. Tüm hakları saklıdır.</p>
     </footer>
 
     <script>
@@ -210,6 +210,9 @@
                 activeLink.classList.add('active');
             }
         }
+
+        // Telif hakkı yılını otomatik olarak güncelleyen kod
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
