@@ -7,15 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLp/iBq06eIuT4+6o/lB8u2L+wL5n82+Vb8U4/a7tD2/5E2c5nI/u+Jv48O9/j4oR2P6V3C5C5Z8g9y9Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLp/iBq06eIuT4+6o/lB8u2L+wL5n82+Vb8U4/a7tD2/5E2c5nI/u+Jv48O9/j4oR2P6V3C5C5Z8g9y9Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /*
-         * Web sitesinin tüm stil kuralları burada tanımlanır.
-         */
+        /* Web sitesinin tüm stil kuralları burada tanımlanır. */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a202c;
+            background-color: #0d1117;
             color: #e2e8f0;
         }
         .fade-in {
@@ -26,56 +24,243 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .nav-link.active {
-            color: #818cf8; /* Koyu mor tonu */
+            color: #818cf8;
             font-weight: 600;
+            border-bottom: 2px solid #818cf8;
         }
         .button-hover-effect:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .hero-bg {
+            background: radial-gradient(circle at top, #1f2937 0%, #111827 80%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .card-glow {
+            transition: all 0.3s ease-in-out;
+            border: 1px solid #1f2937;
+        }
+        .card-glow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(129, 140, 248, 0.1);
+            border-color: #818cf8;
+        }
+        .section-bg {
+            background-color: #111827;
+            padding: 2rem; /* Mobile için daha uygun padding */
+            margin-top: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        @media (min-width: 768px) {
+            .section-bg {
+                padding: 4rem; /* Masaüstü için daha geniş padding */
+            }
+        }
+        /* Mobil menü için stiller */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 64px;
+            left: 0;
+            right: 0;
+            background-color: #1f2937;
+            flex-direction: column;
+            padding: 1rem;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            z-index: 40;
+        }
+        .mobile-menu a {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+        }
+        .mobile-menu a:hover {
+            background-color: rgba(129, 140, 248, 0.1);
+        }
+        .mobile-menu.open {
+            display: flex;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <header class="bg-gray-900 shadow-xl sticky top-0 z-50">
+    <header class="bg-gray-900/50 backdrop-blur-sm shadow-xl sticky top-0 z-50">
         <div class="container mx-auto p-4 flex justify-between items-center">
-            <a href="#" onclick="showSection('home-section')" class="text-2xl font-bold text-white tracking-wide">
+            <a href="#" onclick="showSection('home-section')" class="text-2xl font-bold text-white tracking-wide font-poppins">
                 Zwen'in <span class="text-indigo-400">Kod Okulu</span>
             </a>
             
-            <nav class="flex items-center space-x-6">
-                <a href="#" onclick="showSection('home-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 active">Ana Sayfa</a>
-                <a href="#" onclick="showSection('python-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300">Python</a>
-                <a href="#" onclick="showSection('js-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300">JavaScript</a>
-                <a href="#" onclick="showSection('about-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300">Hakkımda</a>
+            <!-- Masaüstü Navigasyon Menüsü -->
+            <nav id="desktop-nav" class="hidden md:flex items-center space-x-6">
+                <a href="#" onclick="showSection('home-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 active py-2 px-1">Ana Sayfa</a>
+                <a href="#" onclick="showSection('best-path-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">En İyi Başlangıç</a>
+                <a href="#" onclick="showSection('languages-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">Popüler Diller</a>
+                <a href="#" onclick="showSection('discord-bots-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">Discord Botları</a>
+                <a href="#" onclick="showSection('vds-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">VDS Hizmetleri</a>
+                <a href="#" onclick="showSection('about-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">Hakkımda</a>
             </nav>
+
+            <!-- Mobil Menü Butonu -->
+            <button id="menu-button" class="md:hidden text-gray-400 text-2xl hover:text-indigo-400 focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+        
+        <!-- Mobil Menü Açılır Alanı -->
+        <nav id="mobile-menu" class="mobile-menu">
+            <a href="#" onclick="showSection('home-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 active py-2 px-1">Ana Sayfa</a>
+            <a href="#" onclick="showSection('best-path-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">En İyi Başlangıç</a>
+            <a href="#" onclick="showSection('languages-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">Popüler Diller</a>
+            <a href="#" onclick="showSection('discord-bots-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">Discord Botları</a>
+            <a href="#" onclick="showSection('vds-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">VDS Hizmetleri</a>
+            <a href="#" onclick="showSection('about-section')" class="nav-link text-gray-400 hover:text-indigo-400 transition-colors duration-300 py-2 px-1">Hakkımda</a>
+        </nav>
     </header>
 
-    <main class="container mx-auto p-8 flex-grow">
+    <main class="container mx-auto p-4 md:p-8 flex-grow">
 
         <section id="home-section" class="fade-in">
-            <div class="text-center py-20 px-4 bg-gray-800 rounded-3xl shadow-2xl">
-                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight text-white">
+            <div class="text-center py-12 md:py-20 px-4 rounded-3xl shadow-2xl hero-bg">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight text-white font-poppins">
                     Merhaba, <span class="text-indigo-400">kod</span> dünyasına hoş geldin!
                 </h1>
-                <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                    Programlama öğrenmek artık çok daha kolay. İster Python ile başla, ister JavaScript'in büyülü dünyasına dal.
+                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Programlama öğrenmek artık çok daha kolay. Hayallerindeki projeyi hayata geçirmek için ilk adımı at.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                    <button onclick="showSection('python-section')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg">
-                        <i class="fab fa-python mr-3"></i> Python Öğren
+                    <button onclick="showSection('best-path-section')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg w-full sm:w-auto">
+                        <i class="fas fa-route mr-3"></i> En İyi Başlangıç Yolunu Keşfet
                     </button>
-                    <button onclick="showSection('js-section')" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg">
-                        <i class="fab fa-js mr-3"></i> JavaScript Öğren
+                    <button onclick="showSection('languages-section')" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg w-full sm:w-auto">
+                        <i class="fas fa-code mr-3"></i> Dilleri İncele
                     </button>
                 </div>
             </div>
         </section>
 
-        <section id="python-section" class="hidden fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12 flex items-center justify-center">
-                <i class="fab fa-python text-indigo-400 mr-4 text-5xl"></i> Python Öğrenmeye Başla
+        ---
+
+        <!-- En İyi Başlangıç bölümü - Geri Dön butonu eklendi -->
+        <section id="best-path-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('home-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Sayfaya Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-star text-yellow-400 mr-4 text-4xl md:text-5xl"></i> En İyi Başlangıç Yolu
+            </h2>
+            <div class="max-w-4xl mx-auto bg-gray-800 rounded-3xl p-6 md:p-10 shadow-2xl card-glow">
+                <h3 class="text-2xl md:text-3xl font-semibold text-yellow-400 mb-4 flex items-center">
+                    <i class="fas fa-globe mr-3"></i> Web Geliştirme ile Başla!
+                </h3>
+                <p class="text-base md:text-lg text-gray-300 mb-4">
+                    Kodlama dünyasına ilk adımı atmak için en hızlı ve en görsel tatmin edici yol web geliştirmedir. Kendi web siteni oluşturarak, yazdığın kodun sonucunu anında görebilir ve motivasyonunu artırabilirsin.
+                </p>
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                    <li>**HTML:** Web sitenin iskeletini oluşturmayı öğren.</li>
+                    <li>**CSS:** Siteni renklendir, tasarımla ve görsel olarak güzelleştir.</li>
+                    <li>**JavaScript:** Siteni etkileşimli hale getir, dinamik özellikler ekle.</li>
+                </ul>
+                <p class="text-base md:text-lg text-gray-300 italic">
+                    "Birkaç hafta içinde kendi siteni yayına alabilir ve bu harika hissi yaşayabilirsin!" - Zwen
+                </p>
+                <div class="flex justify-center mt-6">
+                    <button onclick="showSection('web-dev-section')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg">
+                        <i class="fas fa-arrow-right mr-3"></i> Web Geliştirme Bölümüne Git
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="languages-section" class="hidden fade-in section-bg">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-terminal text-indigo-400 mr-4 text-4xl md:text-5xl"></i> Popüler Yazılım Dilleri
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Her bir dil kartı artık tıklanabilir link haline getirildi. -->
+                <a href="#" onclick="showSection('python-section')" class="bg-gray-800 rounded-xl p-6 shadow-2xl card-glow block">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fab fa-python mr-3"></i> Python</h3>
+                    <p class="text-gray-300">
+                        **Kullanım Alanları:** Yapay zeka, makine öğrenimi, veri bilimi, web geliştirme (Django, Flask), otomasyon.
+                    </p>
+                </a>
+                <a href="#" onclick="showSection('js-section')" class="bg-gray-800 rounded-xl p-6 shadow-2xl card-glow block">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3 flex items-center"><i class="fab fa-js-square mr-3"></i> JavaScript</h3>
+                    <p class="text-gray-300">
+                        **Kullanım Alanları:** Etkileşimli web siteleri, web uygulamaları (React, Angular), backend (Node.js), mobil uygulamalar (React Native).
+                    </p>
+                </a>
+                <a href="#" onclick="showSection('cpp-section')" class="bg-gray-800 rounded-xl p-6 shadow-2xl card-glow block">
+                    <h3 class="text-2xl font-semibold text-purple-400 mb-3 flex items-center"><i class="fas fa-cogs mr-3"></i> C++</h3>
+                    <p class="text-gray-300">
+                        **Kullanım Alanları:** Oyun geliştirme (Unreal Engine), yüksek performanslı sistemler, işletim sistemleri, gömülü sistemler.
+                    </p>
+                </a>
+                <a href="#" onclick="showSection('java-section')" class="bg-gray-800 rounded-xl p-6 shadow-2xl card-glow block">
+                    <h3 class="text-2xl font-semibold text-red-400 mb-3 flex items-center"><i class="fab fa-java mr-3"></i> Java</h3>
+                    <p class="text-gray-300">
+                        **Kullanım Alanları:** Büyük kurumsal uygulamalar, Android mobil uygulamalar, backend geliştirme.
+                    </p>
+                </a>
+                <a href="#" onclick="showSection('csharp-section')" class="bg-gray-800 rounded-xl p-6 shadow-2xl card-glow block">
+                    <h3 class="text-2xl font-semibold text-blue-400 mb-3 flex items-center"><i class="fas fa-microchip mr-3"></i> C#</h3>
+                    <p class="text-gray-300">
+                        **Kullanım Alanları:** Oyun geliştirme (Unity), Windows masaüstü uygulamaları, web (ASP.NET).
+                    </p>
+                </a>
+                <a href="#" onclick="showSection('go-section')" class="bg-gray-800 rounded-xl p-6 shadow-2xl card-glow block">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-3 flex items-center"><i class="fas fa-terminal mr-3"></i> Go</h3>
+                    <p class="text-gray-300">
+                        **Kullanım Alanları:** Bulut bilişim, sunucu tarafı uygulamalar, dağıtık sistemler, ağ programlama.
+                    </p>
+                </a>
+            </div>
+        </section>
+
+        ---
+        
+        <section id="web-dev-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('home-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Sayfaya Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-laptop-code text-indigo-400 mr-4 text-4xl md:text-5xl"></i> Web Geliştirmeye Başla
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fab fa-html5 mr-3"></i> HTML</h3>
+                    <p class="text-gray-300">
+                        Web sayfalarının iskeletini oluşturan dildir. Sayfadaki metinleri, başlıkları, resimleri ve linkleri yapılandırmak için kullanılır.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fab fa-css3-alt mr-3"></i> CSS</h3>
+                    <p class="text-gray-300">
+                        Bir web sitesinin görünümünü, renklerini, yazı tiplerini ve düzenini belirlemek için kullanılan stil dilidir.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fab fa-js-square mr-3"></i> JavaScript</h3>
+                    <p class="text-gray-300">
+                        Web sitelerine dinamik özellikler ve etkileşim katmak için kullanılan programlama dilidir.
+                    </p>
+                </div>
+            </div>
+            <p class="mt-8 md:mt-12 text-center text-base md:text-lg italic text-gray-400">
+                "Bir web sitesi yapmak, bir binanın temelini atmak, duvarlarını örmek ve içini dekore etmek gibidir." - Zwen
+            </p>
+        </section>
+
+        <!-- Python bölümü - Geri Dön butonu eklendi -->
+        <section id="python-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('languages-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Dillere Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fab fa-python text-indigo-400 mr-4 text-4xl md:text-5xl"></i> Python Öğrenmeye Başla
             </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
@@ -103,14 +288,18 @@
                     </ul>
                 </div>
             </div>
-            <p class="mt-12 text-center text-lg italic text-gray-400">
+            <p class="mt-8 md:mt-12 text-center text-base md:text-lg italic text-gray-400">
                 "Unutma, her büyük yazılımcı bir 'Merhaba Dünya!' ile başladı." - Zwen
             </p>
         </section>
 
-        <section id="js-section" class="hidden fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12 flex items-center justify-center">
-                <i class="fab fa-js-square text-yellow-400 mr-4 text-5xl"></i> JavaScript Öğrenmeye Başla
+        <!-- JavaScript bölümü - Geri Dön butonu eklendi -->
+        <section id="js-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('languages-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Dillere Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fab fa-js-square text-yellow-400 mr-4 text-4xl md:text-5xl"></i> JavaScript Öğrenmeye Başla
             </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
@@ -138,24 +327,275 @@
                     </ul>
                 </div>
             </div>
-            <p class="mt-12 text-center text-lg italic text-gray-400">
+            <p class="mt-8 md:mt-12 text-center text-base md:text-lg italic text-gray-400">
                 "Her web sitesi interaktif bir dünyaya dönüştürülebilir!" - Zwen
             </p>
         </section>
 
-        <section id="about-section" class="hidden fade-in">
-            <div class="max-w-4xl mx-auto bg-gray-800 rounded-3xl p-10 shadow-2xl">
-                <h2 class="text-4xl font-bold text-center mb-6">
+        <!-- C++ bölümü - Geri Dön butonu eklendi -->
+        <section id="cpp-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('languages-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Dillere Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-cogs text-purple-400 mr-4 text-4xl md:text-5xl"></i> C++ Öğrenmeye Başla
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-purple-400 mb-3 flex items-center"><i class="fas fa-question-circle mr-3"></i> Neden C++?</h3>
+                    <p class="text-gray-300">
+                        C++, yüksek performans gerektiren sistemler, oyun motorları ve işletim sistemleri gibi alanlarda kullanılan güçlü bir dildir.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-purple-400 mb-3 flex items-center"><i class="fas fa-book-open mr-3"></i> Başlangıç Kaynakları</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><a href="https://www.learncpp.com/" target="_blank" class="hover:text-white transition-colors">LearnCpp.com</a></li>
+                        <li><a href="https://www.youtube.com/c/thenewboston" target="_blank" class="hover:text-white transition-colors">The New Boston YouTube Kanalı (C++)</a></li>
+                        <li><a href="https://www.geeksforgeeks.org/c-plus-plus/" target="_blank" class="hover:text-white transition-colors">GeeksforGeeks C++</a></li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-purple-400 mb-3 flex items-center"><i class="fas fa-tools mr-3"></i> Proje Fikirleri</h3>
+                    <p class="text-gray-300 mb-2">Öğrendiklerini pekiştirmek için bu projelerle pratik yapabilirsin:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Konsol tabanlı bir tic-tac-toe oyunu</li>
+                        <li>Basit bir dosya yönetim uygulaması</li>
+                        <li>Veritabanı bağlantısı kurma</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-8 md:mt-12 text-center text-base md:text-lg italic text-gray-400">
+                "C++ ile sistemin kalbine dokunabilirsin!" - Zwen
+            </p>
+        </section>
+
+        <!-- Java bölümü - Geri Dön butonu eklendi -->
+        <section id="java-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('languages-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Dillere Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fab fa-java text-red-400 mr-4 text-4xl md:text-5xl"></i> Java Öğrenmeye Başla
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-red-400 mb-3 flex items-center"><i class="fas fa-question-circle mr-3"></i> Neden Java?</h3>
+                    <p class="text-gray-300">
+                        Java, "bir kere yaz her yerde çalıştır" felsefesiyle bilinir. Kurumsal uygulamalar, Android mobil uygulamalar ve web backend projelerinde sıkça kullanılır.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-red-400 mb-3 flex items-center"><i class="fas fa-book-open mr-3"></i> Başlangıç Kaynakları</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><a href="https://docs.oracle.com/en/java/" target="_blank" class="hover:text-white transition-colors">Java Resmi Dokümantasyon</a></li>
+                        <li><a href="https://www.w3schools.com/java/" target="_blank" class="hover:text-white transition-colors">W3Schools Java Tutorial</a></li>
+                        <li><a href="https://www.youtube.com/c/TheNewBoston/playlists?view=50&sort=dd&shelf_id=3" target="_blank" class="hover:text-white transition-colors">The New Boston - Java Playlist</a></li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-red-400 mb-3 flex items-center"><i class="fas fa-tools mr-3"></i> Proje Fikirleri</h3>
+                    <p class="text-gray-300 mb-2">Öğrendiklerini pekiştirmek için bu projelerle pratik yapabilirsin:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Basit bir ATM uygulaması</li>
+                        <li>Metin tabanlı bir macera oyunu</li>
+                        <li>Personel yönetim sistemi</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- C# bölümü - Geri Dön butonu eklendi -->
+        <section id="csharp-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('languages-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Dillere Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-microchip text-blue-400 mr-4 text-4xl md:text-5xl"></i> C# Öğrenmeye Başla
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-blue-400 mb-3 flex items-center"><i class="fas fa-question-circle mr-3"></i> Neden C#?</h3>
+                    <p class="text-gray-300">
+                        Microsoft tarafından geliştirilen C#, özellikle oyun geliştirme (Unity) ve Windows platformunda masaüstü uygulamaları için popüler bir seçenektir.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-blue-400 mb-3 flex items-center"><i class="fas fa-book-open mr-3"></i> Başlangıç Kaynakları</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><a href="https://docs.microsoft.com/tr-tr/dotnet/csharp/" target="_blank" class="hover:text-white transition-colors">C# Resmi Dokümantasyon</a></li>
+                        <li><a href="https://www.udemy.com/topic/c-sharp/" target="_blank" class="hover:text-white transition-colors">Udemy C# Kursları</a></li>
+                        <li><a href="https://www.youtube.com/c/mscorner" target="_blank" class="hover:text-white transition-colors">MSDN YouTube Kanalı</a></li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-blue-400 mb-3 flex items-center"><i class="fas fa-tools mr-3"></i> Proje Fikirleri</h3>
+                    <p class="text-gray-300 mb-2">Öğrendiklerini pekiştirmek için bu projelerle pratik yapabilirsin:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Basit bir not defteri uygulaması</li>
+                        <li>Unity ile 2D platform oyunu</li>
+                        <li>Mini bir web API'si oluşturma</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Go bölümü - Geri Dön butonu eklendi -->
+        <section id="go-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('languages-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Dillere Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-terminal text-cyan-400 mr-4 text-4xl md:text-5xl"></i> Go Öğrenmeye Başla
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-3 flex items-center"><i class="fas fa-question-circle mr-3"></i> Neden Go?</h3>
+                    <p class="text-gray-300">
+                        Google tarafından geliştirilen Go, özellikle yüksek performanslı ve eşzamanlı sistemler için tasarlanmıştır. Sunucu ve bulut bilişimde popülerdir.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-3 flex items-center"><i class="fas fa-book-open mr-3"></i> Başlangıç Kaynakları</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><a href="https://go.dev/doc/" target="_blank" class="hover:text-white transition-colors">Go Resmi Dokümantasyon</a></li>
+                        <li><a href="https://go.dev/tour/" target="_blank" class="hover:text-white transition-colors">A Tour of Go</a></li>
+                        <li><a href="https://www.youtube.com/c/Golang-Official" target="_blank" class="hover:text-white transition-colors">Go YouTube Kanalı</a></li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-3 flex items-center"><i class="fas fa-tools mr-3"></i> Proje Fikirleri</h3>
+                    <p class="text-gray-300 mb-2">Öğrendiklerini pekiştirmek için bu projelerle pratik yapabilirsin:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Basit bir web sunucusu</li>
+                        <li>Komut satırı aracı (CLI) geliştirme</li>
+                        <li>Ağ tarayıcıları veya port tarayıcıları</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Discord Botları bölümü - Geri Dön butonu eklendi -->
+        <section id="discord-bots-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('home-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Sayfaya Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fab fa-discord text-indigo-400 mr-4 text-4xl md:text-5xl"></i> Discord Bot Geliştirme Rehberi (Node.js)
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fas fa-terminal mr-3"></i> Nasıl Başlanır?</h3>
+                    <p class="text-gray-300">
+                        İlk Discord botunu oluşturma adımlarını öğren. Discord Developer Portal'dan bot tokeni alma ve Node.js için gerekli **discord.js** kütüphanesini kurma.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fas fa-code mr-3"></i> Popüler Komutlar</h3>
+                    <p class="text-gray-300">
+                        Sık kullanılan komutlar için hazır kod örnekleri. Ping, avatar, rastgele sayı üretme gibi komutların kodlarını burada bulabilirsin.
+                    </p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-2xl border border-gray-700 transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3 flex items-center"><i class="fas fa-file-alt mr-3"></i> Config Dosyası</h3>
+                    <p class="text-gray-300">
+                        Botunun ayarlarını (token, prefix) düzenli ve güvenli bir şekilde yönetmek için **.env** dosyasını nasıl oluşturacağını ve kullanacağını öğren.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Örnek Kod Bloğu -->
+            <div class="mt-8 md:mt-12 bg-gray-900 rounded-xl p-6 shadow-2xl border border-gray-700">
+                <h3 class="text-xl font-bold text-indigo-400 mb-4"><i class="fas fa-code mr-2"></i> Basit Node.js Bot Örneği</h3>
+                <p class="text-gray-300 mb-4 text-sm">
+                    Bu örnek, `.env` dosyasından tokeninizi okuyan ve basit bir `ping` komutunu çalıştıran bir botun temel yapısını gösterir.
+                </p>
+                <pre class="whitespace-pre-wrap break-words text-sm text-gray-300 bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>
+// index.js
+const { Client, GatewayIntentBits } = require('discord.js');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages] });
+const prefix = '!';
+
+client.once('ready', () => {
+    console.log(`Bot ${client.user.tag} olarak giriş yaptı!`);
+});
+
+client.on('messageCreate', message => {
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    if (command === 'ping') {
+        message.reply(`Pong! ${client.ws.ping}ms`);
+    }
+});
+
+client.login(process.env.TOKEN);
+                </code></pre>
+
+                <h3 class="text-xl font-bold text-indigo-400 mt-6 mb-4"><i class="fas fa-file-alt mr-2"></i> .env Dosyası Örneği</h3>
+                <p class="text-gray-300 mb-4 text-sm">
+                    Bot tokeninizi doğrudan kod içine yazmak yerine, bu dosyada güvenli bir şekilde saklamalısınız.
+                </p>
+                <pre class="whitespace-pre-wrap break-words text-sm text-gray-300 bg-gray-800 p-4 rounded-lg overflow-x-auto"><code>
+// .env
+TOKEN=BURAYA_BOT_TOKENİNİ_YAPIŞTIR
+                </code></pre>
+            </div>
+            <p class="mt-8 md:mt-12 text-center text-base md:text-lg italic text-gray-400">
+                "Kod yazmanın en güzel yanı, Discord topluluğun için bir şeyler yaratmak!" - Zwen
+            </p>
+        </section>
+
+        ---
+
+        <!-- VDS Hizmetleri bölümü - Geri Dön butonu eklendi -->
+        <section id="vds-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('home-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Sayfaya Geri Dön
+            </button>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 flex items-center justify-center">
+                <i class="fas fa-server text-indigo-400 mr-4 text-4xl md:text-5xl"></i> VDS Hizmetleri
+            </h2>
+            <div class="max-w-4xl mx-auto bg-gray-800 rounded-3xl p-6 md:p-10 shadow-2xl border border-gray-700">
+                <h3 class="text-2xl font-semibold text-indigo-400 mb-4 flex items-center justify-center"><i class="fas fa-microchip mr-3"></i> VDS (Sanal Sunucu) Desteği</h3>
+                <p class="text-base md:text-lg text-gray-300 text-center">
+                    Eğer oyun sunucuları, Discord botları veya diğer projelerin için 7/24 kesintisiz çalışacak bir sanal sunucuya ihtiyacın varsa, profesyonel kurulum ve yönetim desteği sunuyorum.
+                    Sunucunun tüm teknik detaylarıyla ben ilgilenirken, sen sadece projenin gelişimine odaklanabilirsin. Hizmetlerim hakkında daha fazla bilgi almak veya özel bir talepte bulunmak için Discord sunucumuza katılabilirsin.
+                </p>
+                <div class="flex justify-center mt-6">
+                    <a href="https://discord.gg/sanalci" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 button-hover-effect shadow-lg">
+                        <i class="fab fa-discord mr-3"></i> Discord'a Katıl
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <!-- Hakkımda bölümü - Geri Dön butonu eklendi -->
+        <section id="about-section" class="hidden fade-in section-bg">
+            <button onclick="showSection('home-section')" class="flex items-center mb-6 text-gray-400 hover:text-indigo-400 transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Sayfaya Geri Dön
+            </button>
+            <div class="max-w-4xl mx-auto bg-gray-800 rounded-3xl p-6 md:p-10 shadow-2xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">
                     <i class="fas fa-user-circle text-indigo-400 mr-3"></i> Zwen Kimdir?
                 </h2>
-                <div class="text-lg text-gray-300 space-y-6 text-center">
+                <div class="text-base md:text-lg text-gray-300 space-y-6 text-center">
                     <p>
                         Merhaba! Ben Zwen. Bu web sitesini, kodlama öğrenmek isteyen herkese ilham vermek ve rehberlik etmek amacıyla kurdum. Programlama yolculuğumda edindiğim deneyimleri, en iyi kaynakları ve pratik proje fikirlerini burada sizlerle paylaşıyorum.
                     </p>
                     <p>
                         Kodlama tutkumun yanı sıra, **Discord botları geliştirmekle** de uğraşıyorum. Eğer bir Discord botuna ihtiyacın olursa veya oyunlar için **VDS (Sanal Sunucu) desteği** arıyorsan, Discord üzerinden bana direkt mesaj atabilirsin.
                     </p>
-                    <p class="flex justify-center items-center gap-4">
+                    <p class="flex flex-col sm:flex-row justify-center items-center gap-4">
                         <span class="flex items-center"><i class="fab fa-discord mr-2 text-indigo-400"></i> Discord: basimsana</span>
                         <span class="flex items-center"><i class="fab fa-instagram mr-2 text-pink-400"></i> Instagram: k3vancates</span>
                     </p>
@@ -168,24 +608,22 @@
 
     </main>
 
-    <footer class="bg-gray-900 text-center text-gray-500 p-4 mt-auto">
+    <footer class="bg-gray-900 text-center text-gray-500 p-8 mt-auto">
         <div class="flex justify-center space-x-6 mb-2">
             <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github-square fa-2x"></i></a>
             <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter-square fa-2x"></i></a>
             <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin fa-2x"></i></a>
         </div>
         <p>Zwen'den Sevgilerle</p>
-        <p class="text-sm mt-1">© <span id="current-year">2025</span>. Tüm hakları saklıdır.</p>
+        <p class="text-sm mt-1">© 2024. Tüm hakları saklıdır.</p>
     </footer>
 
     <script>
-        /*
-         * Web sitesinin tüm etkileşimli JavaScript kodları burada tanımlanır.
-         * Sayfa geçişlerini ve aktif linkleri yönetir.
-         */
+        /* Web sitesinin tüm etkileşimli JavaScript kodları burada tanımlanır. */
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
-        const allSections = ['home-section', 'python-section', 'js-section', 'about-section'];
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
         function showSection(id) {
             // Tüm bölümleri gizle ve animasyon sınıfını kaldır
@@ -193,6 +631,7 @@
                 section.classList.add('hidden');
                 section.classList.remove('fade-in');
             });
+            
             // İlgili bölümü göster ve animasyonu ekle
             const targetSection = document.getElementById(id);
             if (targetSection) {
@@ -204,15 +643,28 @@
             navLinks.forEach(link => {
                 link.classList.remove('active');
             });
-            // Tıklanan linke "active" sınıfını ekle
+            
+            // Tıklanan linke "active" sınıfını ekle (hem masaüstü hem de mobil menü için)
             const activeLink = document.querySelector(`a[onclick="showSection('${id}')"]`);
             if (activeLink) {
+                 // Sadece ana sayfa menüsünü aktif yap
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
                 activeLink.classList.add('active');
             }
+
+            // Mobil menüyü kapat
+            mobileMenu.classList.remove('open');
         }
 
-        // Telif hakkı yılını otomatik olarak güncelleyen kod
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // Mobil menü butonuna tıklama işlevi ekle
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Sayfa yüklendiğinde Ana Sayfa bölümünü göster
+        window.onload = function() {
+            showSection('home-section');
+        };
     </script>
 </body>
 </html>
