@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zwen'in Kod Okulu</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Koyu arka plan */
+        }
+        /* Fade in animasyonu */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Aktif linkin rengini değiştirme */
+        .nav-link.active {
+            color: #6366f1; /* Mor renk */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- Navigasyon Çubuğu -->
+    <header class="bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto p-4 flex justify-between items-center">
+            <!-- Logo/Başlık -->
+            <a href="#" onclick="showSection('home-section')" class="text-2xl font-bold text-white tracking-wide">
+                Zwen'in <span class="text-indigo-500">Kod Okulu</span>
+            </a>
+            
+            <!-- Navigasyon Menüsü -->
+            <nav class="flex items-center space-x-6">
+                <a href="#" onclick="showSection('home-section')" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 active">Ana Sayfa</a>
+                <a href="#" onclick="showSection('python-section')" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Python</a>
+                <a href="#" onclick="showSection('js-section')" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">JavaScript</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="container mx-auto p-8 flex-grow">
+
+        <!-- Ana Sayfa Bölümü -->
+        <section id="home-section" class="fade-in">
+            <div class="text-center py-20 px-4">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight">
+                    Merhaba, <span class="text-indigo-500">kod</span> dünyasına hoş geldin!
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Programlama öğrenmek artık çok daha kolay. İster Python ile başla, ister JavaScript'in büyülü dünyasına dal.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                    <button onclick="showSection('python-section')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
+                        Python Öğren
+                    </button>
+                    <button onclick="showSection('js-section')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
+                        JavaScript Öğren
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Python Öğrenme Bölümü -->
+        <section id="python-section" class="hidden fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12">Python Öğrenmeye Başla</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Kaynak Kartı 1 -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3">Neden Python?</h3>
+                    <p class="text-gray-300">
+                        Python, anlaşılır sözdizimi sayesinde yeni başlayanlar için harika bir dildir. Veri bilimi, web geliştirme ve yapay zeka gibi birçok alanda kullanılır.
+                        <span class="block mt-2 text-sm text-gray-500">- Zwen</span>
+                    </p>
+                </div>
+                <!-- Kaynak Kartı 2 -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3">Başlangıç Kaynakları</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><a href="https://www.python.org/doc/" target="_blank" class="hover:text-white transition-colors">Python Resmi Dokümantasyon</a></li>
+                        <li><a href="https://www.freecodecamp.org/learn/python-for-everybody/" target="_blank" class="hover:text-white transition-colors">FreeCodeCamp Python Kursu</a></li>
+                        <li><a href="https://www.youtube.com/c/CoreySchafer" target="_blank" class="hover:text-white transition-colors">Corey Schafer YouTube Kanalı</a></li>
+                    </ul>
+                </div>
+                <!-- Kaynak Kartı 3 -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-3">Proje Fikirleri</h3>
+                    <p class="text-gray-300 mb-2">Öğrendiklerini pekiştirmek için bu projelerle pratik yapabilirsin:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Basit bir hesap makinesi uygulaması</li>
+                        <li>To-do listesi yapma</li>
+                        <li>Hava durumu sorgulama botu</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-12 text-center text-lg italic text-gray-400">
+                "Unutma, her büyük yazılımcı bir 'Merhaba Dünya!' ile başladı." - Zwen
+            </p>
+        </section>
+
+        <!-- JavaScript Öğrenme Bölümü -->
+        <section id="js-section" class="hidden fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12">JavaScript Öğrenmeye Başla</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Kaynak Kartı 1 -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3">Neden JavaScript?</h3>
+                    <p class="text-gray-300">
+                        JavaScript, web sitelerini interaktif hale getiren, tarayıcıların dilidir. Frontend'den backend'e kadar her yerde karşınıza çıkar.
+                        <span class="block mt-2 text-sm text-gray-500">- Zwen</span>
+                    </p>
+                </div>
+                <!-- Kaynak Kartı 2 -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3">Başlangıç Kaynakları</h3>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li><a href="https://developer.mozilla.org/tr/docs/Web/JavaScript" target="_blank" class="hover:text-white transition-colors">MDN Web Docs</a></li>
+                        <li><a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/" target="_blank" class="hover:text-white transition-colors">FreeCodeCamp JS Kursu</a></li>
+                        <li><a href="https://javascript.info/" target="_blank" class="hover:text-white transition-colors">The Modern JavaScript Tutorial</a></li>
+                    </ul>
+                </div>
+                <!-- Kaynak Kartı 3 -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+                    <h3 class="text-2xl font-semibold text-yellow-400 mb-3">Proje Fikirleri</h3>
+                    <p class="text-gray-300 mb-2">Kodlamaya başlamak için bu fikirleri deneyebilirsin:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Küçük bir dijital saat uygulaması</li>
+                        <li>Resim galerisi (görsel slayt)</li>
+                        <li>Form doğrulama (validation)</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-12 text-center text-lg italic text-gray-400">
+                "Her web sitesi interaktif bir dünyaya dönüştürülebilir!" - Zwen
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center text-gray-400 p-4 mt-auto">
+        <p>Zwen'den Sevgilerle</p>
+        <p class="text-sm mt-1">&copy; 2024. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <!-- JavaScript ile sayfa geçişleri -->
+    <script>
+        // Sayfa bölümlerini seçme
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Belirli bir bölümü gösterip diğerlerini gizleyen fonksiyon
+        function showSection(id) {
+            // Tüm bölümleri gizle
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                section.classList.remove('fade-in');
+            });
+            // İlgili bölümü göster
+            const targetSection = document.getElementById(id);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                targetSection.classList.add('fade-in');
+            }
+            
+            // Aktif navigasyon linkini işaretle
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            // Tıklanan linki bulup aktif yap
+            const activeLink = document.querySelector(`a[onclick="showSection('${id}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
